@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp"
-const Todo = require('./models/models').Todo;
 
 // reqest bodyをパースする
 app.use(express.json())
