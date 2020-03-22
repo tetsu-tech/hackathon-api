@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    container_name: node-api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - MONGO_DATABASE=mongodb://mongodb/myapp
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 8080:8080
+    tty: true
+    links:
+      - mongodb
+
+  # ローカルホストの27017 portと繋ぐ
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    # すでにportを使っている場合はホストマシン側のportを変更する
+    ports:
+      - 27017:27017
+    command:
+      - mongod
