@@ -2,34 +2,55 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp"
-const Todo = require('./models').Todo;
 
 // reqest bodyをパースする
 app.use(express.json())
 
 mongoose.connect(databaseUrl, { useNewUrlParser: true });
 
-app.get('/todos', function(req, res) {
-  Todo.find().exec((err, todos) => {
-    if (err) {
-      res.send(err)
-      return
-    }
-    res.json(todos)
-  })
-});
+const dummy_issue_item = {
+  order: 1,
+  name: "hogehoge",
+  description: "aaaaaaaaaaa"
+}
 
-app.post('/todos', function(req, res) {
-  const todo = new Todo()
+const dummy_issue_item2 = {
+  order: 1,
+  name: "hogehoge",
+  description: "aaaaaaaaaaa"
+}
 
-  todo.title = req.body.title
-  todo.done = false
-  todo.save((err, doc) => {
-    if (err) {
-        return res.send(err);
-    }
-    res.json(doc)
-  })
+const dummy_templates = [
+  {
+    _id: "dummy1",
+    title: "",
+    issue_items: [dummy_issue_item]
+  },
+  {
+    _id: "dummy2",
+    title: "",
+    issue_items: [dummy_issue_item, dummy_issue_item2]
+  }
+]
+
+const new_dummy_template = {
+  _id: "dummy_added",
+  title: "ああああああああああ",
+  issue_items: [dummy_issue_item, dummy_issue_item2]
+}
+
+app.get('/api/templates', (req, res) => {
+  res.json(dummy_templates);
+})
+
+app.post('/api/templates', (req, res) => {
+  dummy_templates.push(new_dummy_template)
+  res.json(new_dummy_template);
+})
+
+app.get('/api/templates/:template_id', (req, res) => {
+  const templateId = req.params.template_id;
+  res.json(dummy_templates[0]);
 })
 
 app.listen(8080, () => {
