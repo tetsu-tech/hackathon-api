@@ -1,0 +1,5 @@
+## Setup
+
+```
+docker-compose up
+```
