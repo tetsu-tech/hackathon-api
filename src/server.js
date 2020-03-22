@@ -53,6 +53,10 @@ app.get('/api/templates/:template_id', (req, res) => {
   res.json(dummy_templates[0]);
 })
 
+app.get('/api/issues', (req, res) => {
+  res.json("Githubにissue作る");
+})
+
 app.listen(8080, () => {
   console.log(`app is running on port 8080`);
 });
