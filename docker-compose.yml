@@ -4,13 +4,13 @@ services:
   app:
     container_name: node-api
     build:
-      context: ./api
+      context: ./src
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
       - MONGO_DATABASE=mongodb://mongodb/myapp
     volumes:
-      - ./api:/usr/src/app
+      - ./src:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 8080:8080
