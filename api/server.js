@@ -22,23 +22,30 @@ const dummy_issue_item2 = {
 
 const dummy_templates = [
   {
-    _id: "dummy2",
-    title: "",
-    issue_items: [dummy_issue_item, dummy_issue_item2]
-  },
-  {
     _id: "dummy1",
     title: "",
     issue_items: [dummy_issue_item]
+  },
+  {
+    _id: "dummy2",
+    title: "",
+    issue_items: [dummy_issue_item, dummy_issue_item2]
   }
 ]
+
+const new_dummy_template = {
+  _id: "dummy_added",
+  title: "ああああああああああ",
+  issue_items: [dummy_issue_item, dummy_issue_item2]
+}
 
 app.get('/api/templates', (req, res) => {
   res.json(dummy_templates);
 })
 
 app.post('/api/templates', (req, res) => {
-  res.json("hello post");
+  dummy_templates.push(new_dummy_template)
+  res.json(new_dummy_template);
 })
 
 app.get('/api/templates/:template_id', (req, res) => {
