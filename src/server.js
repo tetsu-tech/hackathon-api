@@ -1,22 +1,22 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-const mongoose = require('mongoose');
-const databaseUrl = process.env.MONGO_DATABASE || 'mongodb://localhost/myapp';
-const {IssueTemplate} = require('./models/issueTemplate');
+const mongoose = require("mongoose");
+const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
+const { IssueTemplate } = require("./models/issueTemplate");
 
 // reqest bodyをパースする
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(databaseUrl, {useNewUrlParser: true});
+mongoose.connect(databaseUrl, { useNewUrlParser: true });
 
-app.get('/api/templates', async (req, res) => {
+app.get("/api/templates", async (req, res) => {
   const doc = await IssueTemplate.find().exec();
   res.json(doc);
 });
 
-app.post('/api/templates', async (req, res) => {
+app.post("/api/templates", async (req, res) => {
   const issute_template = new IssueTemplate();
   issute_template.title = req.body.title;
   issute_template.issue_items = req.body.issue_items;
@@ -24,14 +24,32 @@ app.post('/api/templates', async (req, res) => {
   res.json(doc);
 });
 
-app.get('/api/templates/:template_id', async (req, res) => {
+app.get("/api/templates/:template_id", async (req, res) => {
   const templateId = req.params.template_id;
-  const doc = await IssueTemplate.find({_id: templateId}).exec();
+  const doc = await IssueTemplate.find({ _id: templateId }).exec();
   res.json(doc);
 });
 
-app.get('/api/issues', (req, res) => {
-  res.json('Githubにissue作る');
+app.get("/api/issues", async (req, res) => {
+  var GitHub = require("github-api");
+
+  // basic auth
+  var gh = new GitHub({
+    username: "tetsu-tech-user",
+    password: "tetsu55555"
+    /* also acceptable:
+        token: 'MY_OAUTH_TOKEN'
+      */
+  });
+
+  var me = gh.getIssues("tetsu-tech", "hackathon-api");
+  try {
+    const arr = await me.listIssues({});
+    console.log(arr.data);
+    res.json(arr.data);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(8080, () => {
