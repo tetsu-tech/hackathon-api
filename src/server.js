@@ -31,26 +31,40 @@ app.get("/api/templates/:template_id", async (req, res) => {
 });
 
 app.get("/api/issues", async (req, res) => {
-  var GitHub = require("github-api");
+  const GitHub = require("github-api");
 
   // basic auth
-  var gh = new GitHub({
+  const gh = new GitHub({
     username: "tetsu-tech-user",
     password: "tetsu55555"
-    /* also acceptable:
-        token: 'MY_OAUTH_TOKEN'
-      */
   });
 
-  var me = gh.getIssues("tetsu-tech", "hackathon-api");
+  const gh_obj = gh.getIssues("tetsu-tech", "hackathon-api");
   try {
-    const arr = await me.listIssues({});
-    console.log(arr.data);
-    res.json(arr.data);
+    const gh_res = await gh_obj.listIssues({});
+    res.json(gh_res.data);
   } catch (error) {
     console.log(error);
   }
 });
+
+app.post("/api/issues", async (req, res) => {
+  const GitHub = require("github-api");
+  const gh = new GitHub({
+    username: "<user name>",
+    password: "<password>"
+  });
+
+  const issue_obj = gh.getIssues("tetsu-tech", "hackathon-api");
+
+  try {
+    const gh_res = await issue_obj.createIssue(req.body)
+    res.json(gh_res.data)
+  } catch (error) {
+    console.log(error);
+    res.status(error.response.status).json(error.response.statusText)
+  }
+})
 
 app.listen(8080, () => {
   console.log(`app is running on port 8080`);
