@@ -35,8 +35,8 @@ app.get("/api/issues", async (req, res) => {
 
   // basic auth
   const gh = new GitHub({
-    username: "tetsu-tech-user",
-    password: "tetsu55555"
+    username: "<user name>",
+    password: "<password>"
   });
 
   const gh_obj = gh.getIssues("tetsu-tech", "hackathon-api");
