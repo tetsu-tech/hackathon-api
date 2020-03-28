@@ -38,8 +38,8 @@ app.get("/api/issues", async (req, res) => {
 
   // basic auth
   const gh = new GitHub({
-    username: "<user name>",
-    password: "<password>"
+    username: process.env.GITHUB_USER_NAME,
+    password: process.env.GITHUB_USER_PASSWORD
   });
 
   const ghObj = gh.getIssues(
