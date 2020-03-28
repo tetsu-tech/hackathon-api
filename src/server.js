@@ -57,8 +57,8 @@ app.get("/api/issues", async (req, res) => {
 app.post("/api/issues", async (req, res) => {
   const GitHub = require("github-api");
   const gh = new GitHub({
-    username: "<user name>",
-    password: "<password>"
+    username: process.env.GITHUB_USER_NAME,
+    password: process.env.GITHUB_USER_PASSWORD
   });
 
   const issueObj = gh.getIssues("tetsu-tech", "hackathon-api");
