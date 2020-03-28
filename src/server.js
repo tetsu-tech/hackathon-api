@@ -39,10 +39,10 @@ app.get("/api/issues", async (req, res) => {
     password: "<password>"
   });
 
-  const gh_obj = gh.getIssues("tetsu-tech", "hackathon-api");
+  const ghObj = gh.getIssues("tetsu-tech", "hackathon-api");
   try {
-    const gh_res = await gh_obj.listIssues({});
-    res.json(gh_res.data);
+    const ghRes = await ghObj.listIssues({});
+    res.json(ghRes.data);
   } catch (error) {
     console.log(error);
   }
@@ -55,11 +55,11 @@ app.post("/api/issues", async (req, res) => {
     password: "<password>"
   });
 
-  const issue_obj = gh.getIssues("tetsu-tech", "hackathon-api");
+  const issueObj = gh.getIssues("tetsu-tech", "hackathon-api");
 
   try {
-    const gh_res = await issue_obj.createIssue(req.body)
-    res.json(gh_res.data)
+    const ghRes = await issueObj.createIssue(req.body)
+    res.json(ghRes.data)
   } catch (error) {
     console.log(error);
     res.status(error.response.status).json(error.response.statusText)
