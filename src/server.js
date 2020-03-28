@@ -43,14 +43,13 @@ app.get("/hello", (req, res) => {
 })
 
 app.get("/api/templates", async (req, res) => {
-  res.json(databaseUrl)
-  // try {
-  //   const doc = await IssueTemplate.find().exec();
-  //   res.json(doc);
-  // } catch (error) {
-  //   console.log(error)
-  //   res.json("validation failed")
-  // }
+  try {
+    const doc = await IssueTemplate.find().exec();
+    res.json(doc);
+  } catch (error) {
+    console.log(error)
+    res.json("validation failed")
+  }
 });
 
 app.post("/api/templates", async (req, res) => {
