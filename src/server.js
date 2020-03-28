@@ -71,6 +71,12 @@ app.get("/api/templates/:template_id", async (req, res) => {
   res.json(doc);
 });
 
+app.delete("/api/templates/:template_id", async (req, res) => {
+  const templateId = req.params.template_id;
+  const doc = await IssueTemplate.deleteOne({ _id: templateId });
+  res.json(doc);
+})
+
 app.get("/api/issues", async (req, res) => {
   const GitHub = require("github-api");
 
