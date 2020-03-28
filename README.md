@@ -1,10 +1,19 @@
 ## Setup
 
 ### STEP. 1
+
+#### env の設定( docker-compose.yml )
+
 ```
-env の設定
-- GITHUB_USER_NAME
-- GITHUB_USER_PASSWORD
+...
+  environment:
+    ...
+    - GITHUB_USER_NAME=sample
+    - GITHUB_USER_PASSWORD=sample
+    - GITHUB_ORGANIZATION_NAME=tetsu-tech
+    - GITHUB_REPOSITORY_NAME=hackathon-sandbox
+    - BASIC_ID=sample
+    - BASIC_PASSWORD=sample
 ```
 
 ### STEP. 2
