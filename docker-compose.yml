@@ -13,7 +13,7 @@ services:
       - GITHUB_USER_PASSWORD=sample
       - GITHUB_ORGANIZATION_NAME=tetsu-tech
       - GITHUB_REPOSITORY_NAME=hackathon-sandbox
-      - BASIC_ID=sample
+      - BASIC_USER=sample
       - BASIC_PASSWORD=sample
     volumes:
       - ./src:/usr/src/app
