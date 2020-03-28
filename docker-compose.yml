@@ -9,6 +9,12 @@ services:
     environment:
       - NODE_ENV=development
       - MONGO_DATABASE=mongodb://mongodb/myapp
+      - GITHUB_USER_NAME=sample
+      - GITHUB_USER_PASSWORD=sample
+      - GITHUB_ORGANIZATION_NAME=sample
+      - GITHUB_REPOSITORY_NAME=sample
+      - BASIC_ID=sample
+      - BASIC_PASSWORD=sample
     volumes:
       - ./src:/usr/src/app
       - /usr/src/app/node_modules
