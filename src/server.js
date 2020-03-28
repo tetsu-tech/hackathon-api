@@ -1,6 +1,6 @@
 // ENV設定
-const basicID = process.env.GITHUB_USER_NAME
-const basicPassword = process.env.GITHUB_USER_PASSWORD
+const basicUser = process.env.BASIC_USER
+const basicPassword = process.env.BASIC_PASSWORD
 const githubUserName = process.env.GITHUB_USER_NAME
 const githubUserPassword = process.env.GITHUB_USER_PASSWORD
 const githubOrganizationName = process.env.GITHUB_ORGANIZATION_NAME
@@ -19,7 +19,7 @@ app.use(basicAuth({
       return "Unauthorized" // 認証失敗時に表示するメッセージ
   },
   authorizer: (username, password) => {
-    const userMatch = basicAuth.safeCompare(username, basicID)
+    const userMatch = basicAuth.safeCompare(username, basicUser)
     const passMatch = basicAuth.safeCompare(password, basicPassword)
 
     return userMatch & passMatch
