@@ -15,6 +15,9 @@ require('dotenv').config({ path: ENV_FILE })
 const basicID = process.env.GITHUB_USER_NAME
 const basicPassword = process.env.GITHUB_USER_PASSWORD
 
+const githubUserName = process.env.GITHUB_USER_NAME
+const githubUserPassword = process.env.GITHUB_USER_PASSWORD
+
 // アプリケーション設定
 const express = require("express");
 const cors = require('cors')
@@ -75,8 +78,8 @@ app.get("/api/issues", async (req, res) => {
 
   // basic auth
   const gh = new GitHub({
-    username: process.env.GITHUB_USER_NAME,
-    password: process.env.GITHUB_USER_PASSWORD
+    username: githubUserName,
+    password: githubUserPassword
   });
 
   const ghObj = gh.getIssues(
@@ -94,8 +97,8 @@ app.get("/api/issues", async (req, res) => {
 app.post("/api/issues", async (req, res) => {
   const GitHub = require("github-api");
   const gh = new GitHub({
-    username: process.env.GITHUB_USER_NAME,
-    password: process.env.GITHUB_USER_PASSWORD
+    username: githubUserName,
+    password: githubUserPassword
   });
 
   const issueObj = gh.getIssues(
