@@ -2,6 +2,23 @@ const express = require("express");
 const cors = require('cors')
 const app = express();
 
+const basicAuth = require("express-basic-auth")
+const correctUserName = "tetsu-tech-user"
+const correctPassword = "tetsu5555"
+
+app.use(basicAuth({
+  challenge: true,
+  unauthorizedResponse: () => {
+      return "Unauthorized" // 認証失敗時に表示するメッセージ
+  },
+  authorizer: (username, password) => {
+    const userMatch = basicAuth.safeCompare(username, correctUserName)
+    const passMatch = basicAuth.safeCompare(password, correctPassword)
+
+    return userMatch & passMatch
+  }
+}))
+
 const mongoose = require("mongoose");
 const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
 const { IssueTemplate } = require("./models/issueTemplate");
