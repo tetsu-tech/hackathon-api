@@ -1,0 +1,16 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - build
+    - -f
+    - ./Dockerfile.prod
+    - -t
+    - gcr.io/$PROJECT_ID/hackathon-api
+    - .
+  dir: './src'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hackathon-api']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'node-hackathon', '--image', 'gcr.io/$PROJECT_ID/hackathon-api', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+images:
+- gcr.io/$PROJECT_ID/hackathon-api

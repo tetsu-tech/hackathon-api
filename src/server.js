@@ -1,8 +1,42 @@
-// dotenv の読み込み
-require("dotenv").config();
+const env = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return 'dev'
+  }
+  // if (process.env.NODE_ENV === 'staging') {
+  //   return 'stage'
+  // }
+  // return 'prod'
+}
+const ENVIRONMENT = env()
+const ENV_FILE = `./.env.${ENVIRONMENT}`
+require('dotenv').config({ path: ENV_FILE })
 
+// ENV設定
+const basicID = process.env.GITHUB_USER_NAME
+const basicPassword = process.env.GITHUB_USER_PASSWORD
+
+const githubUserName = process.env.GITHUB_USER_NAME
+const githubUserPassword = process.env.GITHUB_USER_PASSWORD
+
+// アプリケーション設定
 const express = require("express");
+const cors = require('cors')
 const app = express();
+
+const basicAuth = require("express-basic-auth")
+
+app.use(basicAuth({
+  challenge: true,
+  unauthorizedResponse: () => {
+      return "Unauthorized" // 認証失敗時に表示するメッセージ
+  },
+  authorizer: (username, password) => {
+    const userMatch = basicAuth.safeCompare(username, basicID)
+    const passMatch = basicAuth.safeCompare(password, basicPassword)
+
+    return userMatch & passMatch
+  }
+}))
 
 const mongoose = require("mongoose");
 const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
@@ -12,7 +46,13 @@ const { IssueTemplate } = require("./models/issueTemplate");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors())
+
 mongoose.connect(databaseUrl, { useNewUrlParser: true });
+
+app.get("/hello", (req, res) => {
+  res.send("hello")
+})
 
 app.get("/api/templates", async (req, res) => {
   const doc = await IssueTemplate.find().exec();
@@ -38,8 +78,8 @@ app.get("/api/issues", async (req, res) => {
 
   // basic auth
   const gh = new GitHub({
-    username: process.env.GITHUB_USER_NAME,
-    password: process.env.GITHUB_USER_PASSWORD
+    username: githubUserName,
+    password: githubUserPassword
   });
 
   const ghObj = gh.getIssues(
@@ -57,12 +97,14 @@ app.get("/api/issues", async (req, res) => {
 app.post("/api/issues", async (req, res) => {
   const GitHub = require("github-api");
   const gh = new GitHub({
-    username: process.env.GITHUB_USER_NAME,
-    password: process.env.GITHUB_USER_PASSWORD
+    username: githubUserName,
+    password: githubUserPassword
   });
 
-  const issueObj = gh.getIssues("tetsu-tech", "hackathon-api");
-
+  const issueObj = gh.getIssues(
+    process.env.GITHUB_ORGANIZATION_NAME,
+    process.env.GITHUB_REPOSITORY_NAME
+  );
   try {
     const ghRes = await issueObj.createIssue(req.body);
     res.json(ghRes.data);
