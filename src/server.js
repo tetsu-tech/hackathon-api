@@ -49,10 +49,15 @@ app.get("/api/templates", async (req, res) => {
 
 app.post("/api/templates", async (req, res) => {
   const issute_template = new IssueTemplate();
-  issute_template.title = req.body.title;
-  issute_template.issue_items = req.body.issue_items;
-  const doc = await issute_template.save();
-  res.json(doc);
+  try {
+    issute_template.title = req.body.title;
+    issute_template.issue_items = req.body.issue_items;
+    const doc = await issute_template.save();
+    res.json(doc);
+  } catch (error) {
+    console.log(error)
+    res.json("validation failed")
+  }
 });
 
 app.get("/api/templates/:template_id", async (req, res) => {
