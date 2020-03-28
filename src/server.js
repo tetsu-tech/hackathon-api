@@ -12,8 +12,8 @@ const ENV_FILE = `./.env.${ENVIRONMENT}`
 require('dotenv').config({ path: ENV_FILE })
 
 // ENV設定
-const basicID = process.env.GITHUB_USER_NAME
-const basicPassword = process.env.GITHUB_USER_PASSWORD
+const basicID = process.env.BASIC_USER
+const basicPassword = process.env.BASIC_PASSWORD
 
 const githubUserName = process.env.GITHUB_USER_NAME
 const githubUserPassword = process.env.GITHUB_USER_PASSWORD
