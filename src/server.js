@@ -1,3 +1,6 @@
+// dotenv の読み込み
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 
@@ -39,7 +42,10 @@ app.get("/api/issues", async (req, res) => {
     password: "<password>"
   });
 
-  const ghObj = gh.getIssues(process.env.GITHUB_ORGANIZATION_NAME, process.env.GITHUB_REPOSITORY_NAME);
+  const ghObj = gh.getIssues(
+    process.env.GITHUB_ORGANIZATION_NAME,
+    process.env.GITHUB_REPOSITORY_NAME
+  );
   try {
     const ghRes = await ghObj.listIssues({});
     res.json(ghRes.data);
@@ -58,13 +64,13 @@ app.post("/api/issues", async (req, res) => {
   const issueObj = gh.getIssues("tetsu-tech", "hackathon-api");
 
   try {
-    const ghRes = await issueObj.createIssue(req.body)
-    res.json(ghRes.data)
+    const ghRes = await issueObj.createIssue(req.body);
+    res.json(ghRes.data);
   } catch (error) {
     console.log(error);
-    res.status(error.response.status).json(error.response.statusText)
+    res.status(error.response.status).json(error.response.statusText);
   }
-})
+});
 
 app.listen(8080, () => {
   console.log(`app is running on port 8080`);
