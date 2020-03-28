@@ -12,11 +12,12 @@ const ENV_FILE = `./.env.${ENVIRONMENT}`
 require('dotenv').config({ path: ENV_FILE })
 
 // ENV設定
-const basicID = process.env.BASIC_USER
-const basicPassword = process.env.BASIC_PASSWORD
-
+const basicID = process.env.GITHUB_USER_NAME
+const basicPassword = process.env.GITHUB_USER_PASSWORD
 const githubUserName = process.env.GITHUB_USER_NAME
 const githubUserPassword = process.env.GITHUB_USER_PASSWORD
+const githubOrganizationName = process.env.GITHUB_ORGANIZATION_NAME
+const githubRepositoryName = process.env.GITHUB_REPOSITORY_NAME
 
 // アプリケーション設定
 const express = require("express");
@@ -83,8 +84,8 @@ app.get("/api/issues", async (req, res) => {
   });
 
   const ghObj = gh.getIssues(
-    process.env.GITHUB_ORGANIZATION_NAME,
-    process.env.GITHUB_REPOSITORY_NAME
+    githubOrganizationName,
+    githubRepositoryName
   );
   try {
     const ghRes = await ghObj.listIssues({});
@@ -102,8 +103,8 @@ app.post("/api/issues", async (req, res) => {
   });
 
   const issueObj = gh.getIssues(
-    process.env.GITHUB_ORGANIZATION_NAME,
-    process.env.GITHUB_REPOSITORY_NAME
+    githubOrganizationName,
+    githubRepositoryName
   );
   try {
     const ghRes = await issueObj.createIssue(req.body);
