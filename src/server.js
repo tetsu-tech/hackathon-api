@@ -1,4 +1,3 @@
-// dotenv の読み込み
 const env = () => {
   if (process.env.NODE_ENV === 'development') {
     return 'dev'
@@ -12,13 +11,16 @@ const ENVIRONMENT = env()
 const ENV_FILE = `./.env.${ENVIRONMENT}`
 require('dotenv').config({ path: ENV_FILE })
 
+// ENV設定
+const basicID = process.env.GITHUB_USER_NAME
+const basicPassword = process.env.GITHUB_USER_PASSWORD
+
+// アプリケーション設定
 const express = require("express");
 const cors = require('cors')
 const app = express();
 
 const basicAuth = require("express-basic-auth")
-const correctUserName = process.env.GITHUB_USER_NAME
-const correctPassword = process.env.GITHUB_USER_PASSWORD
 
 app.use(basicAuth({
   challenge: true,
@@ -26,8 +28,8 @@ app.use(basicAuth({
       return "Unauthorized" // 認証失敗時に表示するメッセージ
   },
   authorizer: (username, password) => {
-    const userMatch = basicAuth.safeCompare(username, correctUserName)
-    const passMatch = basicAuth.safeCompare(password, correctPassword)
+    const userMatch = basicAuth.safeCompare(username, basicID)
+    const passMatch = basicAuth.safeCompare(password, basicPassword)
 
     return userMatch & passMatch
   }
