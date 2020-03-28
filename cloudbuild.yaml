@@ -1,19 +1,19 @@
 steps:
-  # Build the container image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - build
-      - -f
-      - ./Dockerfile.prod
-      - -t
-      - gcr.io/$PROJECT_ID/hackathon-api
-      - .
-    dir: './src'
-  # Push the container image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/hackathon-api']
-  # Deploy container image to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'deploy', 'node-hackathon', '--image', 'gcr.io/$PROJECT_ID/hackathon-api', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
-  images:
-  - gcr.io/$PROJECT_ID/hackathon-api
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - build
+    - -f
+    - ./Dockerfile.prod
+    - -t
+    - gcr.io/$PROJECT_ID/hackathon-api
+    - .
+  dir: './src'
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hackathon-api']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'node-hackathon', '--image', 'gcr.io/$PROJECT_ID/hackathon-api', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+images:
+- gcr.io/$PROJECT_ID/hackathon-api
