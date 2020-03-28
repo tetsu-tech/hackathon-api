@@ -11,8 +11,8 @@ services:
       - MONGO_DATABASE=mongodb://mongodb/myapp
       - GITHUB_USER_NAME=sample
       - GITHUB_USER_PASSWORD=sample
-      - GITHUB_ORGANIZATION_NAME=sample
-      - GITHUB_REPOSITORY_NAME=sample
+      - GITHUB_ORGANIZATION_NAME=tetsu-tech
+      - GITHUB_REPOSITORY_NAME=hackathon-sandbox
       - BASIC_ID=sample
       - BASIC_PASSWORD=sample
     volumes:
