@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const app = express();
 
 const mongoose = require("mongoose");
@@ -9,7 +10,13 @@ const { IssueTemplate } = require("./models/issueTemplate");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors())
+
 mongoose.connect(databaseUrl, { useNewUrlParser: true });
+
+app.get("/hello", (req, res) => {
+  res.send("hello")
+})
 
 app.get("/api/templates", async (req, res) => {
   const doc = await IssueTemplate.find().exec();
