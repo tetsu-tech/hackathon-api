@@ -17,8 +17,8 @@ const cors = require('cors')
 const app = express();
 
 const basicAuth = require("express-basic-auth")
-const correctUserName = "tetsu-tech-user"
-const correctPassword = "tetsu5555"
+const correctUserName = process.env.GITHUB_USER_NAME
+const correctPassword = process.env.GITHUB_USER_PASSWORD
 
 app.use(basicAuth({
   challenge: true,
