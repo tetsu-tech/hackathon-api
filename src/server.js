@@ -11,7 +11,7 @@ const express = require("express");
 const cors = require('cors')
 const app = express();
 
-const basicAuth = require("express-basic-auth")
+// const basicAuth = require("express-basic-auth")
 
 // app.use(basicAuth({
 //   challenge: true,
@@ -43,8 +43,13 @@ app.get("/hello", (req, res) => {
 })
 
 app.get("/api/templates", async (req, res) => {
-  const doc = await IssueTemplate.find().exec();
-  res.json(doc);
+  try {
+    const doc = await IssueTemplate.find().exec();
+    res.json(doc);
+  } catch (error) {
+    console.log(error)
+    res.json("validation failed")
+  }
 });
 
 app.post("/api/templates", async (req, res) => {
