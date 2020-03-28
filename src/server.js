@@ -1,5 +1,16 @@
 // dotenv の読み込み
-require("dotenv").config();
+const env = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return 'dev'
+  }
+  // if (process.env.NODE_ENV === 'staging') {
+  //   return 'stage'
+  // }
+  // return 'prod'
+}
+const ENVIRONMENT = env()
+const ENV_FILE = `./.env.${ENVIRONMENT}`
+require('dotenv').config({ path: ENV_FILE })
 
 const express = require("express");
 const cors = require('cors')
