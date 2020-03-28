@@ -43,7 +43,7 @@ app.get("/hello", (req, res) => {
 })
 
 app.get("/api/templates", async (req, res) => {
-  res.json("/api/templates")
+  res.json(databaseUrl)
   // try {
   //   const doc = await IssueTemplate.find().exec();
   //   res.json(doc);
