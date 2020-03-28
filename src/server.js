@@ -1,16 +1,3 @@
-const env = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return 'dev'
-  }
-  // if (process.env.NODE_ENV === 'staging') {
-  //   return 'stage'
-  // }
-  // return 'prod'
-}
-const ENVIRONMENT = env()
-const ENV_FILE = `./.env.${ENVIRONMENT}`
-require('dotenv').config({ path: ENV_FILE })
-
 // ENV設定
 const basicID = process.env.GITHUB_USER_NAME
 const basicPassword = process.env.GITHUB_USER_PASSWORD
