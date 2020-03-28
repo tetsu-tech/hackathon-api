@@ -96,8 +96,10 @@ app.post("/api/issues", async (req, res) => {
     password: process.env.GITHUB_USER_PASSWORD
   });
 
-  const issueObj = gh.getIssues("tetsu-tech", "hackathon-api");
-
+  const issueObj = gh.getIssues(
+    process.env.GITHUB_ORGANIZATION_NAME,
+    process.env.GITHUB_REPOSITORY_NAME
+  );
   try {
     const ghRes = await issueObj.createIssue(req.body);
     res.json(ghRes.data);
