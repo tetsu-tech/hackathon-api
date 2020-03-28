@@ -13,18 +13,18 @@ const app = express();
 
 const basicAuth = require("express-basic-auth")
 
-app.use(basicAuth({
-  challenge: true,
-  unauthorizedResponse: () => {
-      return "Unauthorized" // 認証失敗時に表示するメッセージ
-  },
-  authorizer: (username, password) => {
-    const userMatch = basicAuth.safeCompare(username, basicUser)
-    const passMatch = basicAuth.safeCompare(password, basicPassword)
+// app.use(basicAuth({
+//   challenge: true,
+//   unauthorizedResponse: () => {
+//       return "Unauthorized" // 認証失敗時に表示するメッセージ
+//   },
+//   authorizer: (username, password) => {
+//     const userMatch = basicAuth.safeCompare(username, basicUser)
+//     const passMatch = basicAuth.safeCompare(password, basicPassword)
 
-    return userMatch & passMatch
-  }
-}))
+//     return userMatch & passMatch
+//   }
+// }))
 
 const mongoose = require("mongoose");
 const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
