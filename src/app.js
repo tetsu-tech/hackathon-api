@@ -1,17 +1,12 @@
 // ENV設定
-const basicUser = process.env.BASIC_USER
-const basicPassword = process.env.BASIC_PASSWORD
-const githubUserName = process.env.GITHUB_USER_NAME
-const githubUserPassword = process.env.GITHUB_USER_PASSWORD
-const githubOrganizationName = process.env.GITHUB_ORGANIZATION_NAME
-const githubRepositoryName = process.env.GITHUB_REPOSITORY_NAME
+const config = require("./configs/config")();
 
 // アプリケーション設定
 const express = require("express");
 const cors = require('cors')
 const app = express();
 
-const basicAuth = require("express-basic-auth")
+// const basicAuth = require("express-basic-auth")
 
 // app.use(basicAuth({
 //   challenge: true,
@@ -19,8 +14,8 @@ const basicAuth = require("express-basic-auth")
 //       return "Unauthorized" // 認証失敗時に表示するメッセージ
 //   },
 //   authorizer: (username, password) => {
-//     const userMatch = basicAuth.safeCompare(username, basicUser)
-//     const passMatch = basicAuth.safeCompare(password, basicPassword)
+//     const userMatch = basicAuth.safeCompare(username, config.auth.basicUser)
+//     const passMatch = basicAuth.safeCompare(password, config.auth.basicPassword)
 
 //     return userMatch & passMatch
 //   }
@@ -82,13 +77,13 @@ app.get("/api/issues", async (req, res) => {
 
   // basic auth
   const gh = new GitHub({
-    username: githubUserName,
-    password: githubUserPassword
+    username: config.github.githubUserName,
+    password: config.github.githubUserPassword
   });
 
   const ghObj = gh.getIssues(
-    githubOrganizationName,
-    githubRepositoryName
+    config.github.githubOrganizationName,
+    config.github.githubOrganizationName
   );
   try {
     const ghRes = await ghObj.listIssues({});
@@ -101,13 +96,13 @@ app.get("/api/issues", async (req, res) => {
 app.post("/api/issues", async (req, res) => {
   const GitHub = require("github-api");
   const gh = new GitHub({
-    username: githubUserName,
-    password: githubUserPassword
+    username: config.github.githubUserName,
+    password: config.github.githubUserPassword
   });
 
   const issueObj = gh.getIssues(
-    githubOrganizationName,
-    githubRepositoryName
+    config.github.githubOrganizationName,
+    config.github.githubOrganizationName
   );
   try {
     const ghRes = await issueObj.createIssue(req.body);
