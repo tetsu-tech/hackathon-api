@@ -47,7 +47,7 @@ app.get("/api/templates", async (req, res) => {
   }
 });
 
-app.post("/api/templates", async (req, res) => {
+app.post("/api/templates", async (req, res, next) => {
   const issute_template = new IssueTemplate();
   try {
     issute_template.title = req.body.title;
@@ -56,7 +56,7 @@ app.post("/api/templates", async (req, res) => {
     res.json(doc);
   } catch (error) {
     console.log(error)
-    res.status(500).send('Something broke!')
+    next(error)
   }
 });
 
@@ -90,6 +90,7 @@ app.get("/api/issues", async (req, res) => {
     res.json(ghRes.data);
   } catch (error) {
     console.log(error);
+    next(error)
   }
 });
 
@@ -109,7 +110,7 @@ app.post("/api/issues", async (req, res) => {
     res.json(ghRes.data);
   } catch (error) {
     console.log(error);
-    res.status(error.response.status).json(error.response.statusText);
+    next(error)
   }
 });
 
