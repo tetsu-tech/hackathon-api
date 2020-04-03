@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("./app")
+const app = require("../app")
 
 describe("Test hello path", () => {
   test("It should response the GET method", done => {
