@@ -6,3 +6,9 @@ logs:
 
 install:
 	docker-compose exec app npm install
+
+down:
+	docker-compose down
+
+test:
+	docker-compose exec app npm run test
