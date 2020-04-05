@@ -1,4 +1,4 @@
-module.exports = () => ({
+export default () => ({
   app: {
     port: process.env.APP_PORT || 8080,
   },
@@ -18,4 +18,4 @@ module.exports = () => ({
     // host: process.env.DB_HOST,
     // name: process.env.DB_NAME
   }
-});
+})

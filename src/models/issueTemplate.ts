@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose" 
 
 const issueItemsSchema = mongoose.Schema({
   order: {
@@ -26,6 +26,4 @@ const issueTemplateSchema = new mongoose.Schema({
   }
 });
 
-const IssueTemplate = mongoose.model('IssueTemplate', issueTemplateSchema);
-
-module.exports = { IssueTemplate };
+export const IssueTemplate = mongoose.model('IssueTemplate', issueTemplateSchema);

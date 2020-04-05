@@ -1,6 +1,6 @@
-const config = require("../configs/config")()
+import config from "../configs/config"
 
-class IssueController {
+export default class IssueController {
   constructor(){}
 
   async index(req, res, next) {
@@ -8,13 +8,13 @@ class IssueController {
   
     // basic auth
     const gh = new GitHub({
-      username: config.github.githubUserName,
-      password: config.github.githubUserPassword
+      username: config().github.githubUserName,
+      password: config().github.githubUserPassword
     });
     
     const ghObj = gh.getIssues(
-      config.github.githubOrganizationName,
-      config.github.githubRepositoryName
+      config().github.githubOrganizationName,
+      config().github.githubRepositoryName
     );
     
     try {  
@@ -29,13 +29,13 @@ class IssueController {
     const GitHub = require("github-api");
 
     const gh = new GitHub({
-      username: config.github.githubUserName,
-      password: config.github.githubUserPassword
+      username: config().github.githubUserName,
+      password: config().github.githubUserPassword
     });
   
     const issueObj = gh.getIssues(
-      config.github.githubOrganizationName,
-      config.github.githubRepositoryName
+      config().github.githubOrganizationName,
+      config().github.githubRepositoryName
     );
     try {
       const ghRes = await issueObj.createIssue(req.body);
@@ -45,5 +45,3 @@ class IssueController {
     }
   }
 }
-
-module.exports = IssueController
