@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-// id: falseを定義することでsub collectionには_idを生成しない
-var issueItemsSchema = mongoose.Schema({
+const issueItemsSchema = mongoose.Schema({
   order: {
     type: String,
     required: true,

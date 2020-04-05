@@ -3,7 +3,7 @@ steps:
   args:
     - build
     - -f
-    - ./Dockerfile.prod
+    - ./docker/Dockerfile.prod
     - -t
     - gcr.io/$PROJECT_ID/hackathon-api
     - .
