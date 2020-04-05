@@ -5,6 +5,7 @@ const config = require("./configs/config")();
 const express = require("express");
 const app = express();
 const routes = require("./routes/routes")
+const serviceLocator = require("./configs/di")
 
 const mongoose = require("mongoose");
 const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
@@ -18,22 +19,8 @@ app.use(cors())
 
 mongoose.connect(databaseUrl, { useNewUrlParser: true });
 
-// const basicAuth = require("express-basic-auth")
 
-// app.use(basicAuth({
-//   challenge: true,
-//   unauthorizedResponse: () => {
-//       return "Unauthorized" // 認証失敗時に表示するメッセージ
-//   },
-//   authorizer: (username, password) => {
-//     const userMatch = basicAuth.safeCompare(username, config.auth.basicUser)
-//     const passMatch = basicAuth.safeCompare(password, config.auth.basicPassword)
-
-//     return userMatch & passMatch
-//   }
-// }))
-
-routes.register(app);
+routes.register(app, serviceLocator);
 
 app.use(function (err, req, res, next) {
   console.error(err.stack)

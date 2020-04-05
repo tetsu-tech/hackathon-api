@@ -1,43 +1,25 @@
-const { IssueTemplate } = require("../models/issueTemplate");
 const config = require("../configs/config")();
 
-module.exports.register = (app) => {
+module.exports.register = (app, serviceLocator) => {
 
   app.get("/hello", (req, res) => {
     res.send("hello")
   })
 
-  app.get("/api/templates", async (req, res) => {
-    try {
-      const doc = await IssueTemplate.find().exec();
-      res.json(doc);
-    } catch (error) {
-      res.json("validation failed")
-    }
+  app.get("/api/templates", async (req, res, next) => {
+    serviceLocator.get('issueTemplateController').list(req, res, next)
+  });
+
+  app.get("/api/templates/:template_id", async (req, res, next) => {
+    serviceLocator.get('issueTemplateController').show(req, res, next)
   });
   
   app.post("/api/templates", async (req, res, next) => {
-    const issute_template = new IssueTemplate();
-    try {
-      issute_template.title = req.body.title;
-      issute_template.issue_items = req.body.issue_items;
-      const doc = await issute_template.save();
-      res.json(doc);
-    } catch (error) {
-      next(error.data.messege)
-    }
+    serviceLocator.get('issueTemplateController').create(req, res, next)
   });
   
-  app.get("/api/templates/:template_id", async (req, res) => {
-    const templateId = req.params.template_id;
-    const doc = await IssueTemplate.find({ _id: templateId }).exec();
-    res.json(doc);
-  });
-  
-  app.delete("/api/templates/:template_id", async (req, res) => {
-    const templateId = req.params.template_id;
-    const doc = await IssueTemplate.deleteOne({ _id: templateId });
-    res.json(doc);
+  app.delete("/api/templates/:template_id", async (req, res, next) => {
+    serviceLocator.get('issueTemplateController').delete(req, res, next)
   })
   
   app.get("/api/issues", async (req, res, next) => {
