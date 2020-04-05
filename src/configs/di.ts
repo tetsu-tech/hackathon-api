@@ -1,19 +1,20 @@
-const serviceLocator = require("../lib/service-locator")
-const config = require("../configs/config")
-const issueTemplateController = require("../controllers/issue_templates")
-const issueController = require("../controllers/issues")
+// const serviceLocator = require("../lib/service-locator")
+import serviceLocator from "../lib/service-locator"
+import issueTemplateController from "../controllers/issue_templates"
+import issueController from "../controllers/issues"
+import IssueTemplateService from "../services/issue_template"
+import mongoose from "mongoose"
+import { IssueTemplate } from "../models/issueTemplate"
 
 serviceLocator.register('mongoose', () => {
-  return require('mongoose');
+  return mongoose
 });
 
 serviceLocator.register("issueTemplate", () => {
-  const { IssueTemplate } = require("../models/issueTemplate");
   return IssueTemplate
 })
 
 serviceLocator.register("issueTemplateService", () => {
-  const IssueTemplateService = require("../services/issue_template")
   const IssueTemplate = serviceLocator.get("issueTemplate")
   return new IssueTemplateService(IssueTemplate)
 })
@@ -27,4 +28,4 @@ serviceLocator.register("issueController", () => {
   return new issueController()
 })
 
-module.exports = serviceLocator;
+export default serviceLocator;

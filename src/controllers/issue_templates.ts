@@ -1,4 +1,6 @@
-class IssueTemplateController {
+export default class IssueTemplateController {
+  issueTemplateService: any;
+
   constructor(issueTemplateService) {
     this.issueTemplateService = issueTemplateService
   }
@@ -40,5 +42,3 @@ class IssueTemplateController {
     }
   }
 }
-
-module.exports = IssueTemplateController;

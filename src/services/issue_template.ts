@@ -1,4 +1,6 @@
-class IssueTemplateService {
+export default class IssueTemplateService {
+  issueTemplate: any;
+  
   constructor(issueTemplate) {
     this.issueTemplate = issueTemplate
   }
@@ -30,5 +32,3 @@ class IssueTemplateService {
     return doc
   }
 }
-
-module.exports = IssueTemplateService

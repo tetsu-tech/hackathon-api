@@ -1,6 +1,4 @@
-const config = require("../configs/config")();
-
-module.exports.register = (app, serviceLocator) => {
+const register = (app, serviceLocator) => {
 
   app.get("/hello", (req, res) => {
     res.send("hello")
@@ -30,3 +28,5 @@ module.exports.register = (app, serviceLocator) => {
     serviceLocator.get('issueController').create(req, res, next)
   });
 };
+
+export default { register }

@@ -1,22 +1,21 @@
 // ENV設定
-const config = require("./configs/config")();
+import config from "./configs/config"
 
 // アプリケーション設定
-const express = require("express");
+import express from "express"
 const app = express();
-const routes = require("./routes/routes")
-const serviceLocator = require("./configs/di")
-
-const mongoose = require("mongoose");
-const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
+import routes from "./routes/routes"
+import serviceLocator from "./configs/di"
+import mongoose from "mongoose"
 
 // reqest bodyをパースする
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const cors = require('cors')
+import cors from "cors"
 app.use(cors())
 
+const databaseUrl = process.env.MONGO_DATABASE || "mongodb://localhost/myapp";
 mongoose.connect(databaseUrl, { useNewUrlParser: true });
 
 
@@ -27,6 +26,6 @@ app.use(function (err, req, res, next) {
   res.status(500).json({err: err.stack || err})
 })
 
-app.listen(config.app.port, () => {
-  console.log(`app is running on port ${config.app.port}`);
+app.listen(config().app.port, () => {
+  console.log(`app is running on port ${config().app.port}`);
 });
