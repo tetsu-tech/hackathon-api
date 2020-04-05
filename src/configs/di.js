@@ -1,6 +1,7 @@
 const serviceLocator = require("../lib/service-locator")
 const config = require("../configs/config")
 const issueTemplateController = require("../controllers/issue_templates")
+const issueController = require("../controllers/issues")
 
 serviceLocator.register('mongoose', () => {
   return require('mongoose');
@@ -20,6 +21,10 @@ serviceLocator.register("issueTemplateService", () => {
 serviceLocator.register("issueTemplateController", () => {
   const issueTemplateService = serviceLocator.get("issueTemplateService")
   return new issueTemplateController(issueTemplateService)
+})
+
+serviceLocator.register("issueController", () => {
+  return new issueController()
 })
 
 module.exports = serviceLocator;

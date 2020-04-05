@@ -19,9 +19,6 @@ class IssueTemplateService {
     const issue_template = new this.issueTemplate()
     issue_template.title = body.title
     issue_template.issue_items = body.issue_items
-
-    console.log(body)
-    console.log(issue_template)
     const doc = await issue_template.save()
 
     return doc

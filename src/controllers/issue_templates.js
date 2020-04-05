@@ -3,7 +3,7 @@ class IssueTemplateController {
     this.issueTemplateService = issueTemplateService
   }
 
-  async list(req, res, next) {
+  async index(req, res, next) {
     try {
       const result = await this.issueTemplateService.getIssueTemplates()
       res.json(result);
