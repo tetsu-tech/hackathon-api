@@ -21,6 +21,7 @@ mongoose.connect(databaseUrl, { useNewUrlParser: true });
 
 routes.register(app, serviceLocator);
 
+// eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   console.error(err.stack)
   res.status(500).json({err: err.stack || err})
